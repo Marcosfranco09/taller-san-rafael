@@ -1,0 +1,878 @@
+/* styles.css */
+
+/* Custom Properties para Tema Industrial */
+:root {
+  /* Paleta basada en logo (Colores placeholder, ajustable después) */
+  --color-dark-bg: #111111;
+  --color-dark-surface: #1e1e1e;
+  --color-dark-card: #2a2a2a;
+
+  --color-accent: #e53e3e;
+  --color-accent-hover: #c53030;
+  --accent-gradient: #e53e3e;
+
+  --color-text-primary: #f7fafc;
+  --color-text-secondary: #a0aec0;
+  --color-text-muted: #718096;
+
+  --color-border: #4a5568;
+
+  --font-sans: 'Inter', sans-serif;
+  --font-display: 'Barlow', sans-serif;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-dark-bg);
+  color: var(--color-text-primary);
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+
+
+/* Utilidades generales */
+.text-accent {
+  color: var(--color-accent);
+}
+
+.bg-accent {
+  background: var(--accent-gradient);
+}
+
+.border-accent {
+  border-color: var(--color-accent);
+}
+
+.container {
+  padding-left: 1.5rem !important;
+  padding-right: 1.5rem !important;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding-left: 4rem !important;
+    padding-right: 4rem !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    padding-left: 8rem !important;
+    padding-right: 8rem !important;
+  }
+}
+
+.bg-surface {
+  background-color: var(--color-dark-surface);
+}
+
+.bg-card {
+  background-color: var(--color-dark-card);
+}
+
+/* Navegación */
+nav {
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
+}
+
+@media (max-width: 767px) {
+  nav {
+    transform: translateY(0); /* Visible por defecto en móvil */
+  }
+
+  nav.nav-hidden {
+    transform: translateY(-100%);
+  }
+}
+
+.nav-link {
+  transition: color 0.3s ease;
+}
+
+/* Ocultar barra de desplazamiento */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.nav-link.active {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+/* Botón de Contacto Especial (CTA) */
+.nav-contact {
+  background: rgba(229, 62, 62, 0.08); /* Fondo rojo muy sutil */
+  border: 1px solid rgba(229, 62, 62, 0.25);
+  padding: 0.5rem 1.25rem !important;
+  border-radius: 0.8rem;
+  margin-left: 0.25rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Efecto solo en computadoras (con mouse) */
+@media (hover: hover) {
+  .nav-contact:hover {
+    background: var(--color-accent) !important;
+    color: white !important;
+    border-color: var(--color-accent);
+    box-shadow: 0 4px 15px rgba(229, 62, 62, 0.4);
+    transform: translateY(-2px);
+  }
+  .nav-contact:hover i {
+    transform: scale(1.1) rotate(-5deg);
+  }
+}
+
+/* Efecto de pulsación en móviles y click */
+.nav-contact:active {
+  background: var(--color-accent) !important;
+  color: white !important;
+  transform: scale(0.95);
+}
+
+.nav-contact i {
+  transition: transform 0.3s ease;
+}
+
+/* Componentes de Tarjetas */
+.service-card {
+  background-color: var(--color-dark-card);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 1.2rem;
+  padding: 2rem 1.5rem !important; /* Más compacto */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: auto; /* Altura flexible al contenido */
+}
+
+.service-card-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0; /* Oculto por defecto en desktop */
+  filter: grayscale(100%);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  z-index: 0;
+}
+
+.service-card:hover .service-card-bg {
+  opacity: 0.15; /* Aparece solo al hacer hover */
+  transform: scale(1.1);
+}
+
+.service-card > *:not(.service-card-bg) {
+  position: relative;
+  z-index: 1;
+}
+
+.service-icon {
+  color: var(--color-accent);
+  font-size: 3.5rem; /* Icono más grande según diseño */
+  margin-bottom: 2rem;
+  transition: transform 0.4s ease;
+}
+
+.service-card:hover .service-icon {
+  transform: scale(1.15) rotate(5deg);
+}
+
+.service-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  letter-spacing: 0.5px;
+}
+
+.service-card p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 2rem;
+  opacity: 0.8;
+}
+
+.btn-cotizar {
+  padding: 0.8rem 2rem;
+  background: transparent;
+  color: var(--color-accent);
+  border: 1.5px solid var(--color-accent);
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  margin-top: auto;
+}
+
+.btn-cotizar:hover {
+  background: var(--color-accent);
+  color: white;
+  box-shadow: 0 0 20px rgba(229, 62, 62, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Acordeón de Servicios Secundarios */
+.accordion-item {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.accordion-header {
+  width: 100%;
+  text-align: left;
+  padding: 1rem 0;
+  background: none;
+  border: none;
+  color: var(--color-text-primary);
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: color 0.2s ease;
+}
+
+.accordion-header:hover {
+  color: var(--color-accent);
+}
+
+.accordion-icon {
+  transition: transform 0.3s ease;
+}
+
+.accordion-header.active .accordion-icon {
+  transform: rotate(180deg);
+  color: var(--color-accent);
+}
+
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.accordion-content-inner {
+  padding-bottom: 1rem;
+  color: var(--color-text-secondary);
+}
+
+.accordion-content ul {
+  list-style: none;
+  padding-left: 0.5rem;
+}
+
+.accordion-content li {
+  padding: 0.75rem 0;
+  border-bottom: 1px dashed var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.accordion-content li:hover {
+  color: white;
+}
+
+.btn-cotizar-mini {
+  background: transparent;
+  color: var(--color-accent);
+  border: 1px solid var(--color-accent);
+  font-size: 0.6rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  font-weight: bold;
+  pointer-events: auto;
+  flex-shrink: 0;
+  margin-left: 1rem;
+}
+
+.accordion-content li:hover .btn-cotizar-mini {
+  background: var(--accent-gradient);
+  color: white;
+  transform: scale(1.05);
+}
+
+.accordion-content li:last-child {
+  border-bottom: none;
+}
+
+/* Comportamiento de botones Cotizar en Escritorio (Ocultos hasta hover) */
+@media (min-width: 768px) {
+  .btn-cotizar {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  .service-card:hover .btn-cotizar {
+    opacity: 1;
+    transform: translateY(0) scale(1.05);
+  }
+
+  .btn-cotizar-mini {
+    opacity: 0;
+    transform: translateX(10px);
+    pointer-events: none;
+  }
+  .accordion-content li:hover .btn-cotizar-mini {
+    opacity: 1;
+    transform: translateX(0) scale(1.05);
+    pointer-events: auto;
+  }
+}
+
+.accordion-content li::before {
+  content: "•";
+  color: var(--color-accent);
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+/* Botón Flotante de WhatsApp Independiente */
+.whatsapp-float {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  bottom: 40px;
+  right: 40px;
+  background-color: #25d366;
+  color: #FFF;
+  border-radius: 50px;
+  text-align: center;
+  font-size: 30px;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1);
+  color: white;
+  background-color: #1ebe57;
+}
+
+/* Menú Flotante */
+.floating-menu {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px; /* Más margen entre botones */
+}
+
+.floating-items {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Margen entre WhatsApp y Call */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(60px);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Efecto rebote suave al subir */
+  pointer-events: none;
+}
+
+.floating-menu.active .floating-items {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.floating-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFF;
+  font-size: 30px;
+  text-decoration: none;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.floating-btn:hover {
+  transform: scale(1.1);
+  color: white;
+}
+
+.whatsapp-btn {
+  background-color: #25d366;
+}
+.whatsapp-btn:hover {
+  background-color: #1ebe57;
+}
+
+.call-btn {
+  background-color: #007bff; /* Azul */
+}
+.call-btn:hover {
+  background-color: #0056b3;
+}
+
+.floating-main-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50px;
+  background: var(--accent-gradient);
+  color: white;
+  border: none;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.floating-main-btn i {
+  transition: transform 0.3s ease;
+}
+
+.floating-menu.active .floating-main-btn i {
+  transform: rotate(360deg); /* Animación de vuelta completa al cambiar el icono */
+}
+
+.floating-main-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Formulario */
+.form-input {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: var(--color-dark-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 0.375rem;
+  color: var(--color-text-primary);
+  margin-bottom: 1rem;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 1px var(--color-accent);
+}
+
+#login-error {
+  animation: errorFade 0.4s ease-out forwards;
+}
+
+@keyframes errorFade {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Botón de Cotizar Secundario */
+.btn-cotizar-mini {
+  display: inline-block;
+  background: var(--accent-gradient);
+  color: white;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  margin-left: 8px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.btn-cotizar-mini:hover {
+  transform: scale(1.1);
+}
+
+/* CARRUSEL DE SERVICIOS (MOBILE) */
+.carousel-arrow {
+  display: none; /* Oculto en desktop */
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: 2px solid var(--color-accent);
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  z-index: 20;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.carousel-arrow:hover {
+  background: var(--color-accent);
+  box-shadow: 0 0 15px var(--color-accent);
+}
+
+@media (max-width: 768px) {
+  .service-carousel {
+    display: flex !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory;
+    gap: 10px;
+    padding: 30px 6% !important;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    opacity: 0; /* Oculto inicialmente para evitar el salto */
+    transition: opacity 0.6s ease;
+  }
+
+  .service-carousel::-webkit-scrollbar {
+    display: none;
+  }
+
+  .service-card {
+    flex: 0 0 88%;
+    scroll-snap-align: center;
+    /* Quitamos el efecto de desplazamiento hacia abajo de .reveal */
+    transform: translateY(0) scale(0.85) !important;
+    opacity: 0.2 !important;
+    filter: blur(4px) brightness(0.3);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+
+  .service-card.active {
+    transform: translateY(0) scale(1) !important;
+    opacity: 1 !important;
+    filter: blur(0) brightness(1);
+    z-index: 2;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+    border-color: rgba(229, 62, 62, 0.3);
+  }
+
+  /* Quitar fondos en mobile ya que no hay hover */
+  .service-card .service-card-bg {
+    display: none !important;
+  }
+
+  .carousel-arrow {
+    display: flex;
+    background: transparent !important;
+    border: none !important;
+    font-size: 1.8rem;
+    color: rgba(255, 255, 255, 0.6);
+    width: auto;
+    height: auto;
+  }
+
+  .carousel-arrow:hover {
+    background: transparent !important;
+    color: var(--color-accent);
+    box-shadow: none;
+  }
+}
+
+/* Header Sticky */
+.btn-primary {
+  background: var(--accent-gradient);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.375rem;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-accent-hover);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-dark-surface);
+  border-color: var(--color-text-muted);
+}
+
+/* Panel de Administración */
+.admin-panel {
+  background-color: var(--color-dark-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.admin-section {
+  border-bottom: 1px solid var(--color-border);
+  transition: background-color 0.3s ease;
+}
+
+.admin-section:last-child {
+  border-bottom: none;
+}
+
+.admin-section-header {
+  background-color: var(--color-dark-card);
+  padding: 1.25rem 1rem;
+  cursor: pointer;
+  border-bottom: 1px solid transparent;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.2s ease;
+}
+
+.admin-section.active .admin-section-header {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.admin-section-header:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.admin-section-content {
+  padding: 0 1.5rem;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+}
+
+/* Pantalla de Carga (Overlay Fullscreen) */
+#loading-view {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6); /* Más transparente para ver el fondo */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  text-align: center;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+#loading-view.fade-out {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Toast Notificaciones */
+#toast {
+  visibility: hidden;
+  min-width: 250px;
+  background-color: #38a169;
+  color: #fff;
+  text-align: center;
+  border-radius: 4px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1000;
+  left: 50%;
+  bottom: 30px;
+  transform: translateX(-50%);
+  font-size: 17px;
+}
+
+#toast.show {
+  visibility: visible;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
+}
+
+/* Efectos de Scroll (Reveal) */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Retrasos para cascada */
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+.titulo_principal {
+  font-family: 'Goldman', sans-serif !important;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  .form-input {
+    padding: 0.6rem 0.85rem;
+    font-size: 14px;
+    margin-bottom: 0.75rem;
+  }
+  
+  .btn-primary {
+    padding: 0.85rem 1.25rem;
+    font-size: 14px;
+  }
+
+  .admin-panel {
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+}
+
+/* Admin Panel Specifics */
+.admin-body {
+  position: relative;
+  background-color: #000;
+}
+
+.admin-body::before {
+  content: "";
+  position: fixed;
+  inset: -20px;
+  background-image: url('fondo_panel.png');
+  background-size: cover;
+  background-position: center;
+  filter: blur(8px) brightness(0.6); /* Siempre desenfocado */
+  z-index: 0;
+}
+
+#admin-app {
+  position: relative;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 1s ease 0.4s; /* Aparece suavemente después de que inicia el blur */
+  /* Forzamos los colores originales para el panel administrativo */
+  --color-accent: #e53e3e !important;
+  --color-accent-hover: #c53030 !important;
+  --accent-gradient: #e53e3e !important;
+}
+
+body.loaded #admin-app {
+  opacity: 1;
+}
+
+/* Rotación de flechas en Admin */
+.admin-section-header .fa-chevron-down {
+  transition: transform 0.3s ease;
+}
+
+.admin-section-header.active .fa-chevron-down {
+  transform: rotate(180deg);
+  color: var(--color-accent);
+}
+
+/* Toast de Notificación — Estilo Corporativo */
+#toast {
+  visibility: hidden;
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(1rem);
+  background: #1e1e1e;
+  color: #d1d5db;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-left: 3px solid #6b7280;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: normal;
+  max-width: 90vw;
+  word-wrap: break-word;
+  opacity: 0;
+  z-index: 99999;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s linear 0.3s;
+}
+
+#toast.show {
+  visibility: visible;
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s;
+}
+
+/* Botón Cómo Llegar */
+.btn-como-llegar {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+}
+
+.btn-como-llegar:hover {
+  background-color: rgba(229, 62, 62, 0.06);
+  box-shadow: 0 0 16px rgba(229, 62, 62, 0.2);
+  transform: translateY(-2px);
+}

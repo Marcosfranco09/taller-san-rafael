@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taller San Rafael </title>
+    <link rel="icon" type="image/png" href="logo.png">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Barlow:wght@600;700;800&family=Inter:wght@400;500;600&family=Goldman:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#111111',
+                        surface: '#1e1e1e',
+                        card: '#2a2a2a',
+                        accent: 'var(--color-accent)',
+                        'accent-hover': 'var(--color-accent-hover)'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Barlow', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Script Crítico: Aplica branding antes del renderizado para evitar parpadeos -->
+    <script>
+            (function () {
+                const stored = localStorage.getItem('siteData_sanrafael');
+                if (stored) {
+                    try {
+                        const data = JSON.parse(stored);
+                        const root = document.documentElement;
+                        if (data.accentColor) {
+                            root.style.setProperty('--color-accent', data.accentColor);
+                            root.style.setProperty('--accent-gradient', data.accentColor);
+                        }
+                        // Aplicar Hero Bg: Usamos el guardado o el local por defecto
+                        const heroImage = data.heroImg || 'fondo_principal.png';
+                        if (heroImage) {
+                            const style = document.createElement('style');
+                            const bgUrl = encodeURI(heroImage).replace(/'/g, "\\'");
+                            style.textContent = `#hero-bg { background-image: url('${bgUrl}'); opacity: 1 !important; }`;
+                            document.head.appendChild(style);
+                        }
+                    } catch (e) { }
+                }
+            })();
+    </script>
+    <script>
+        // SEGURIDAD: Forzar la desaparición del preloader si algo falla
+        setTimeout(function () {
+            const pre = document.getElementById('preloader');
+            if (pre && pre.style.display !== 'none') {
+                pre.style.opacity = '0';
+                setTimeout(() => { pre.style.display = 'none'; document.body.classList.remove('overflow-hidden'); }, 800);
+            }
+        }, 4000);
+    </script>
+</head>
+
+<body class="bg-dark text-gray-100 font-sans antialiased overflow-hidden">
+
+    <!-- PANTALLA DE CARGA (PRELOADER) -->
+    <div id="preloader"
+        class="fixed inset-0 z-[9999] bg-[#111111] flex flex-col items-center justify-center transition-all duration-700 ease-in-out">
+        <div class="relative w-32 h-32 flex items-center justify-center">
+            <!-- Anillo exterior estático -->
+            <div class="absolute inset-0 border-4 border-white/5 rounded-full"></div>
+            <!-- Anillo giratorio de acento -->
+            <div class="absolute inset-0 border-4 border-accent rounded-full border-t-transparent animate-spin"></div>
+            <!-- Logo en el centro -->
+            <img src="logo.png" alt="Taller San Rafael" class="h-16 w-16 object-contain opacity-80 animate-pulse">
+        </div>
+        <!-- Texto informativo -->
+        <div id="preloader-text"
+            class="mt-8 text-gray-400 text-xs uppercase tracking-[0.3em] font-light opacity-0 transition-opacity duration-300">
+        </div>
+    </div>
+
+    <!-- BARRA DE NAVEGACIÓN -->
+    <nav class="fixed top-0 w-full z-50 bg-dark/60 backdrop-blur-xl border-b border-white/5">
+        <div class="w-full px-20 py-4 md:py-6 overflow-x-auto hide-scrollbar flex justify-center">
+            <div class="flex justify-center gap-8 md:gap-10 min-w-max px-2">
+                <a href="#inicio"
+                    class="nav-link active flex flex-col items-center justify-center text-center gap-1 text-[10px] md:text-xs font-bold uppercase tracking-wider">
+                    <i class="fa-solid fa-house text-lg"></i>
+                    <span>Inicio</span>
+                </a>
+                <a href="#servicios"
+                    class="nav-link flex flex-col items-center justify-center text-center gap-1 text-[10px] md:text-xs font-bold uppercase tracking-wider">
+                    <i class="fa-solid fa-gears text-lg"></i>
+                    <span>Servicios</span>
+                </a>
+                <a href="#proceso"
+                    class="nav-link flex flex-col items-center justify-center text-center gap-1 text-[10px] md:text-xs font-bold uppercase tracking-wider">
+                    <i class="fa-solid fa-diagram-project text-lg"></i>
+                    <span>Proceso</span>
+                </a>
+                <a href="#nosotros"
+                    class="nav-link flex flex-col items-center justify-center text-center gap-1 text-[10px] md:text-xs font-bold uppercase tracking-wider">
+                    <i class="fa-solid fa-users text-lg"></i>
+                    <span>Nosotros</span>
+                </a>
+                <a href="#contacto"
+                    class="nav-link nav-contact hidden md:flex flex-col items-center justify-center text-center gap-1 text-[10px] md:text-xs font-bold uppercase tracking-wider">
+                    <i class="fa-solid fa-envelope text-lg"></i>
+                    <span>Contacto</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 1. HERO -->
+    <header id="inicio"
+        class="relative bg-surface border-b border-gray-800 flex items-center justify-center pt-32 pb-20 md:pt-40 md:pb-28">
+        <!-- Background Image -->
+        <div id="hero-bg" class="absolute inset-0 bg-cover bg-center z-0"></div>
+        <!-- Dark Transparent Overlay -->
+        <div class="absolute inset-0 bg-black/75 z-0"></div>
+
+        <div class="relative z-10 container mx-auto px-6 py-12 flex flex-col items-center text-center">
+            <img src="logo.png" alt="San Rafael Taller Logo" class="h-24 md:h-32 mb-8 drop-shadow-lg object-contain"
+                onerror="this.style.display='none'" style="scale: 1.7;">
+
+            <h1 id="hero-title"
+                class="font-display text-4xl md:text-6xl text-white mb-4 tracking-tight titulo_principal">TALLER SAN
+                RAFAEL</h1>
+            <p id="hero-subtitle" class="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto">Subtítulo o propuesta
+                de valor breve</p>
+
+            <button onclick="abrirWhatsApp()" class="btn-primary flex items-center gap-2 text-lg px-8 py-4">
+                <i class="fa-brands fa-whatsapp text-2xl"></i>
+                Contactar por WhatsApp
+            </button>
+        </div>
+    </header>
+
+    <!-- 2. SERVICIOS -->
+    <section class="py-12 md:py-20 bg-dark container mx-auto px-6 reveal" id="servicios">
+        <div class="text-center mb-16 reveal">
+            <h2 id="services-title" class="font-display text-3xl md:text-4xl text-white mb-4">Nuestros Servicios</h2>
+            <p id="services-subtitle" class="text-gray-400 max-w-2xl mx-auto">Descripción breve de los servicios que
+                ofrecemos</p>
+        </div>
+        <div class="relative group px-4">
+            <!-- Flechas de navegación (Mobile) -->
+            <button id="prev-service" class="carousel-arrow left-2"><i class="fa-solid fa-chevron-left"></i></button>
+            <button id="next-service" class="carousel-arrow right-2"><i class="fa-solid fa-chevron-right"></i></button>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12 service-carousel"
+                id="services-container">
+                <!-- Card 1 -->
+                <div class="service-card p-8 text-center reveal reveal-delay-1">
+                    <div id="srv1-bg" class="service-card-bg"></div>
+                    <i class="fa-solid fa-gears service-icon"></i>
+                    <h3 id="srv1-title" class="font-display text-xl text-white mb-3">Rectificación de Motores</h3>
+                    <p id="srv1-desc" class="text-gray-400">Texto descriptivo breve que será reemplazado posteriormente.
+                    </p>
+                    <button class="btn-cotizar" onclick="cotizarServicio('Rectificación de Motores')">Cotizar
+                        servicio</button>
+                </div>
+                <!-- Card 2 -->
+                <div class="service-card p-8 text-center reveal reveal-delay-2">
+                    <div id="srv2-bg" class="service-card-bg"></div>
+                    <i class="fa-solid fa-screwdriver-wrench service-icon"></i>
+                    <h3 id="srv2-title" class="font-display text-xl text-white mb-3">Cigüeñal</h3>
+                    <p id="srv2-desc" class="text-gray-400">Texto descriptivo breve que será reemplazado posteriormente.
+                    </p>
+                    <button class="btn-cotizar" onclick="cotizarServicio('Cigüeñal')">Cotizar servicio</button>
+                </div>
+                <!-- Card 3 -->
+                <div class="service-card p-8 text-center reveal reveal-delay-3">
+                    <div id="srv3-bg" class="service-card-bg"></div>
+                    <i class="fa-solid fa-layer-group service-icon"></i>
+                    <h3 id="srv3-title" class="font-display text-xl text-white mb-3">Tapas de Cilindro</h3>
+                    <p id="srv3-desc" class="text-gray-400">Texto descriptivo breve que será reemplazado posteriormente.
+                    </p>
+                    <button class="btn-cotizar" onclick="cotizarServicio('Tapas de Cilindro')">Cotizar servicio</button>
+                </div>
+                <!-- Card 4 -->
+                <div class="service-card p-8 text-center">
+                    <div id="srv4-bg" class="service-card-bg"></div>
+                    <i class="fa-solid fa-ruler-combined service-icon"></i>
+                    <h3 id="srv4-title" class="font-display text-xl text-white mb-3">Cilindros y Camisas</h3>
+                    <p id="srv4-desc" class="text-gray-400">Texto descriptivo breve que será reemplazado posteriormente.
+                    </p>
+                    <button class="btn-cotizar" onclick="cotizarServicio('Cilindros y Camisas')">Cotizar
+                        servicio</button>
+                </div>
+                <!-- Card 5 -->
+                <div class="service-card p-8 text-center">
+                    <div id="srv5-bg" class="service-card-bg"></div>
+                    <i class="fa-solid fa-screwdriver-wrench service-icon"></i>
+                    <h3 id="srv5-title" class="font-display text-xl text-white mb-3">Bielas y Bancadas</h3>
+                    <p id="srv5-desc" class="text-gray-400">Texto descriptivo breve que será reemplazado posteriormente.
+                    </p>
+                    <button class="btn-cotizar" onclick="cotizarServicio('Bielas y Bancadas')">Cotizar servicio</button>
+                </div>
+                <!-- Card 6 -->
+                <div class="service-card p-8 text-center">
+                    <div id="srv6-bg" class="service-card-bg"></div>
+                    <i class="fa-solid fa-plus service-icon"></i>
+                    <h3 id="srv6-title" class="font-display text-xl text-white mb-3">Servicios Complementarios</h3>
+                    <p id="srv6-desc" class="text-gray-400">Texto descriptivo breve que será reemplazado posteriormente.
+                    </p>
+                    <button class="btn-cotizar" onclick="cotizarServicio('Servicios Complementarios')">Cotizar
+                        servicio</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Acordeón Servicios Secundarios -->
+        <div class="bg-card rounded-lg border border-gray-800 py-2 px-4 reveal">
+            <div class="accordion-item border-none">
+                <button class="accordion-header flex justify-center items-center relative w-full">
+                    <span class="text-sm uppercase tracking-wider font-bold">Ver mas servicios...</span>
+                    <i class="fa-solid fa-chevron-down accordion-icon absolute right-2"></i>
+                </button>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner pt-4">
+                        <ul id="secondary-services-container" class="grid grid-cols-1 md:grid-cols-2 gap-x-4">
+                            <!-- Se cargan dinámicamente desde el panel -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. BLOQUE DE CONFIANZA -->
+    <section class="py-16 bg-surface border-y border-gray-800 reveal" id="confianza">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col gap-12">
+                <!-- Indicadores -->
+                <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <div class="flex flex-col items-center">
+                        <i class="fa-solid fa-calendar-check text-accent text-4xl mb-4"></i>
+                        <span id="trust1-text" class="font-display font-semibold text-xl text-white">Años de
+                            experiencia</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <i class="fa-solid fa-medal text-accent text-4xl mb-4"></i>
+                        <span id="trust2-text" class="font-display font-semibold text-xl text-white">Calidad del
+                            servicio</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <i class="fa-solid fa-shield-halved text-accent text-4xl mb-4"></i>
+                        <span id="trust3-text" class="font-display font-semibold text-xl text-white">Garantía</span>
+                    </div>
+                </div>
+                <!-- Imagen Taller -->
+                <div class="w-full">
+                    <div id="trust-img"
+                        class="bg-card w-full h-80 md:h-[450px] rounded-lg flex items-center justify-center border border-gray-700 overflow-hidden shadow-2xl">
+                        <span class="text-gray-500 font-display text-xl"><i class="fa-solid fa-image mr-2"></i> Imagen
+                            del taller</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. PROCESO DE TRABAJO -->
+    <section class="py-12 md:py-20 bg-dark container mx-auto px-6 reveal" id="proceso">
+        <h2 class="font-display text-3xl md:text-4xl text-center text-white mb-16">Nuestro Proceso</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
+            <!-- Linea conectora desktop -->
+            <div class="hidden md:block absolute top-8 left-[12.5%] right-[12.5%] h-px bg-white opacity-20 z-0"></div>
+            <!-- Linea conectora mobile -->
+            <div class="md:hidden absolute top-8 bottom-8 left-1/2 w-px bg-white opacity-20 z-0"></div>
+
+            <!-- Paso 1 -->
+            <div class="text-center relative z-10 reveal reveal-delay-1">
+                <div
+                    class="w-16 h-16 mx-auto bg-card border-2 border-accent rounded-full flex items-center justify-center text-accent text-xl font-bold mb-4">
+                    1</div>
+                <h4 id="proc1-title" class="font-display text-xl text-white mb-2">Diagnóstico</h4>
+                <p id="proc1-desc" class="text-gray-400 text-sm">Descripción breve del paso.</p>
+            </div>
+            <!-- Paso 2 -->
+            <div class="text-center relative z-10 reveal reveal-delay-2">
+                <div
+                    class="w-16 h-16 mx-auto bg-card border-2 border-accent rounded-full flex items-center justify-center text-accent text-xl font-bold mb-4">
+                    2</div>
+                <h4 id="proc2-title" class="font-display text-xl text-white mb-2">Presupuesto</h4>
+                <p id="proc2-desc" class="text-gray-400 text-sm">Descripción breve del paso.</p>
+            </div>
+            <!-- Paso 3 -->
+            <div class="text-center relative z-10 reveal reveal-delay-3">
+                <div
+                    class="w-16 h-16 mx-auto bg-card border-2 border-accent rounded-full flex items-center justify-center text-accent text-xl font-bold mb-4">
+                    3</div>
+                <h4 id="proc3-title" class="font-display text-xl text-white mb-2">Reparación</h4>
+                <p id="proc3-desc" class="text-gray-400 text-sm">Descripción breve del paso.</p>
+            </div>
+            <!-- Paso 4 -->
+            <div class="text-center relative z-10 reveal reveal-delay-4">
+                <div
+                    class="w-16 h-16 mx-auto bg-card border-2 border-accent rounded-full flex items-center justify-center text-accent text-xl font-bold mb-4">
+                    4</div>
+                <h4 id="proc4-title" class="font-display text-xl text-white mb-2">Entrega</h4>
+                <p id="proc4-desc" class="text-gray-400 text-sm">Descripción breve del paso.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. SOBRE NOSOTROS -->
+    <section class="py-12 md:py-20 bg-surface border-y border-gray-800 reveal" id="nosotros">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                <div class="w-full lg:w-1/2">
+                    <h2 class="font-display text-3xl md:text-4xl text-white mb-6" style="text-align: center;">Sobre
+                        Nosotros</h2>
+                    <p id="about-text" class="text-gray-400 mb-6" style="text-align: center;">Texto breve sobre la
+                        empresa, historia o valores. Será
+                        reemplazado posteriormente.</p>
+                </div>
+                <div class="w-full lg:w-1/2">
+                    <div id="about-img"
+                        class="bg-card w-full h-64 rounded-lg flex items-center justify-center border border-gray-700 overflow-hidden">
+                        <span class="text-gray-500 font-display text-xl"><i class="fa-solid fa-image mr-2"></i> Imagen
+                            Nosotros</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. CTA -->
+    <section class="py-16 md:py-24 bg-accent text-center px-6">
+        <div class="container mx-auto max-w-3xl">
+            <h2 id="cta-title" class="font-display text-3xl md:text-5xl text-white mb-6 font-bold">¿Listo para comenzar?
+            </h2>
+            <p id="cta-text" class="text-white text-lg mb-10 opacity-90">Texto de invitación a contactar. Será
+                reemplazado.</p>
+            <button onclick="abrirWhatsApp()"
+                class="bg-white text-accent hover:bg-gray-100 font-bold py-4 px-8 rounded-lg shadow-lg transition-transform transform hover:-translate-y-1 text-lg flex items-center justify-center mx-auto gap-2">
+                <i class="fa-brands fa-whatsapp text-2xl"></i>
+                Escribinos por WhatsApp
+            </button>
+        </div>
+    </section>
+
+    <!-- 7. FORMULARIO DE CONTACTO Y MAPA -->
+    <section class="py-12 md:py-20 bg-dark container mx-auto px-4 md:px-6 reveal" id="contacto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+            <!-- Mapa + Botón -->
+            <div class="flex flex-col gap-3">
+                <div class="flex-1 min-h-[300px] md:min-h-[400px] rounded-lg overflow-hidden border border-gray-800 shadow-xl relative">
+                    <iframe
+                        class="absolute w-full"
+                        style="border:0; pointer-events: none; top: -65px; height: calc(100% + 65px);"
+                        loading="lazy"
+                        allowfullscreen
+                        referrerpolicy="no-referrer-when-downgrade"
+                        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3604.6467!2d-57.4901977!3d-25.3659664!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjXCsDIxJzU3LjUiUyA1N8KwMjknMjQuNyJX!5e0!3m2!1ses!2spy!4v1714856000000!5m2!1ses!2spy">
+                    </iframe>
+                </div>
+                <a href="https://www.google.com/maps/dir/?api=1&destination=-25.3659664,-57.4901977"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn-como-llegar w-full py-3 bg-transparent border border-accent text-accent uppercase tracking-widest text-xs font-bold flex items-center justify-center gap-2 rounded-lg shadow-lg">
+                    <i class="fa-solid fa-map-location-dot text-base"></i>
+                    Cómo llegar
+                </a>
+            </div>
+
+
+            <!-- Formulario -->
+            <div class="bg-card border border-gray-800 p-6 md:p-10 rounded-lg shadow-xl">
+                <div class="mb-8">
+                    <h3 class="font-display text-2xl md:text-3xl text-white font-bold uppercase tracking-wider mb-2">
+                        Contacto</h3>
+                    <p class="text-gray-400 text-sm md:text-base mb-4">Si necesitas más información,
+                        escribinos.<br>¡Animate a descubrir nuestra calidad!</p>
+                    <div class="w-12 h-1 bg-accent"></div>
+                </div>
+
+                <form id="contact-form" class="space-y-3">
+                    <div>
+                        <label class="block text-gray-400 text-xs mb-1 font-medium">Nombre *</label>
+                        <input type="text" id="contact-name" class="form-input !mb-0" required
+                            placeholder="Tu nombre completo">
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 text-xs mb-1 font-medium">Teléfono *</label>
+                        <input type="tel" id="contact-phone" class="form-input !mb-0" required
+                            placeholder="Tu número de teléfono">
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 text-xs mb-1 font-medium">Servicio *</label>
+                        <select id="contact-service" class="form-input !mb-0" required>
+                            <option value="" disabled selected>Selecciona un servicio</option>
+                            <optgroup label="Servicios Principales">
+                                <option value="Rectificación de Motores">Rectificación de Motores</option>
+                                <option value="Cigüeñal">Cigüeñal</option>
+                                <option value="Tapas de Cilindro">Tapas de Cilindro</option>
+                                <option value="Cilindros y Camisas">Cilindros y Camisas</option>
+                                <option value="Bielas y Bancadas">Bielas y Bancadas</option>
+                                <option value="Servicios Complementarios">Servicios Complementarios</option>
+                            </optgroup>
+                            <optgroup label="Servicios Detallados">
+                                <option value="Rectificar ejes de levas">Rectificar ejes de levas</option>
+                                <option value="Rectificar cojinetes de levas">Rectificar cojinetes de levas</option>
+                                <option value="Colocar y ajustar bujes de levas">Colocar y ajustar bujes de levas
+                                </option>
+                                <option value="Rectificar cuello de cigüeñal y enroscar">Rectificar cuello de cigüeñal y
+                                    enroscar</option>
+                                <option value="Rectificar interiores de bielas">Rectificar interiores de bielas</option>
+                                <option value="Confeccionar bujes de bielas">Confeccionar bujes de bielas</option>
+                                <option value="Encasquillar alojamiento de túnel de bancada">Encasquillar alojamiento de
+                                    túnel de bancada</option>
+                                <option value="Cambiar / escariar guías de válvulas">Cambiar / escariar guías de
+                                    válvulas</option>
+                                <option value="Rectificar superficie lado cárter">Rectificar superficie lado cárter
+                                </option>
+                                <option value="Soldadura tapa motor frío">Soldadura tapa motor frío</option>
+                                <option value="Metalar y tornear bielas/bancadas">Metalar y tornear bielas/bancadas
+                                </option>
+                                <option value="Probar metales de bancada">Probar metales de bancada</option>
+                                <option value="Radioscopía (detección de fisuras)">Radioscopía (detección de fisuras)
+                                </option>
+                                <option value="Cambiar anillo de cámara">Cambiar anillo de cámara</option>
+                                <option value="Encasquillar asiento de válvula">Encasquillar asiento de válvula</option>
+                                <option value="Repasar túnel de bancadito">Repasar túnel de bancadito</option>
+                                <option value="Relleno y rectificado de cuello trasero de block">Relleno y rectificado
+                                    de cuello trasero de block</option>
+                            </optgroup>
+                            <option value="Otro">Otro (Servicio extraordinario)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 text-xs mb-1 font-medium">Mensaje *</label>
+                        <textarea id="contact-message" class="form-input !mb-0 h-24" required
+                            placeholder="Describe brevemente el problema..."></textarea>
+                    </div>
+
+                    <div class="pt-2">
+                        <button type="submit"
+                            class="btn-primary w-full py-3 uppercase tracking-widest text-xs font-bold">
+                            Enviar Consulta
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER SIMPLE -->
+    <footer class="bg-surface py-8 border-t border-gray-800 text-center text-gray-500">
+        <p>&copy; 2026 San Rafael Taller. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- 8. BOTONES FLOTANTES -->
+    <!-- Menú Flotante (Solo Móvil) -->
+    <div class="floating-menu md:hidden">
+        <div class="floating-items" id="floating-items">
+            <!-- Botón de Llamada (Solo Móvil) -->
+            <a href="tel:123456789" id="call-float" class="floating-btn call-btn" aria-label="Llamar por teléfono">
+                <i class="fa-solid fa-phone"></i>
+            </a>
+
+            <!-- Botón de WhatsApp -->
+            <a href="javascript:void(0)" onclick="abrirWhatsApp()" class="floating-btn whatsapp-btn whatsapp-link"
+                aria-label="Contactar por WhatsApp">
+                <i class="fa-brands fa-whatsapp"></i>
+            </a>
+        </div>
+
+        <!-- Botón Principal (Toggle) -->
+        <button id="floating-toggle" class="floating-main-btn" aria-label="Abrir opciones de contacto">
+            <i class="fa-solid fa-plus" id="floating-icon"></i>
+        </button>
+    </div>
+
+    <!-- Botón de WhatsApp Independiente (Solo Escritorio) -->
+    <a href="javascript:void(0)" onclick="abrirWhatsApp()" class="whatsapp-float hidden md:flex whatsapp-link"
+        aria-label="Contactar por WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- Firebase SDK (Compat) -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <script src="effects.js"></script>
+</body>
+
+</html>
