@@ -1,20 +1,6 @@
 // script.js
 
-// CONFIGURACIÓN DE FIREBASE
-const firebaseConfig = {
-    apiKey: "AIzaSyBPUnHlcXnfdOWZ4u5ZMqnHlimk7AIGqbA",
-    authDomain: "taller-san-rafael.firebaseapp.com",
-    projectId: "taller-san-rafael",
-    storageBucket: "taller-san-rafael.firebasestorage.app",
-    messagingSenderId: "676871208009",
-    appId: "1:676871208009:web:114e3a47febdebeafb9398",
-    measurementId: "G-8JSR09T0WV"
-};
-
-// Inicializar Firebase (Versión Compat)
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-const configDoc = db.collection('configs').doc('siteData');
+// script.js
 
 // Variable global para los datos cargados
 let activeData = null;
@@ -22,62 +8,64 @@ let activeData = null;
 // Valores por defecto (Placeholders)
 const defaultData = {
     heroTitle: "San Rafael Taller",
-    heroSubtitle: "Especialistas en Rectificación de Motores y Precisión Mecánica",
+    heroSubtitle: "Especialistas en Rectificacion y Mecanica General",
     servicesTitle: "Nuestros Servicios",
-    servicesSubtitle: "Soluciones integrales con la más alta tecnología y precisión para su motor.",
+    servicesSubtitle: "Soluciones integrales con la mas alta tecnologia para el motor de su vehiculo",
 
     // Servicios principales
-    service1Title: "Rectificación de Motores",
-    service1Desc: "Servicio completo de rectificación para devolver la potencia original a su motor.",
+    service1Title: "Rectificación de Motor",
+    service1Desc: "Servicio completo de rectificacion para devolver la potencia original a su motor.",
     service2Title: "Cigüeñal",
     service2Desc: "Rectificado y pulido de apoyos para garantizar el ajuste perfecto.",
-    service3Title: "Tapas de Cilindro",
-    service3Desc: "Frenteado, prueba hidráulica y reparación integral de tapas de cilindro.",
+    service3Title: "Block de motor",
+    service3Desc: "Cepillado, encamisado, alesado y reparacion de block.",
     service4Title: "Cilindros y Camisas",
     service4Desc: "Bruñido y encamisado de cilindros con tolerancias exactas.",
-    service5Title: "Bielas y Bancadas",
-    service5Desc: "Alineación, rectificado y embujado de bielas y bancadas.",
+    service5Title: "Tapa de motor",
+    service5Desc: "Cepillado, rectificado de valvulas, encasquillado, prueba hidraulica integral y armado.",
     service6Title: "Servicios Complementarios",
-    service6Desc: "Soldadura, radioscopía y mecanizado de piezas a medida.",
+    service6Desc: "Alineacion, prueba hidraulica de motores, armado de partes y motores, diagnostico de fallas, asesoramiento tecnico.",
 
     // Otros Servicios (Lista secundaria)
     secondaryServices: [
         "Rectificar ejes de levas",
         "Rectificar cojinetes de levas",
-        "Colocar y ajustar bujes de levas",
+        "Cambiar y ajustar bujes de levas",
         "Rectificar cuello de cigüeñal y enroscar",
         "Rectificar interiores de bielas",
         "Confeccionar bujes de bielas",
-        "Encasquillar alojamiento de túnel de bancadas",
-        "Cambiar / escariar guías de válvulas",
+        "Encajillar alojamiento de túnel de bancada",
+        "Cambiar/escariar guía de válvulas",
         "Rectificar superficie lado cárter",
-        "Soldadura tapa motor frío",
+        "Soldadura tapa motor frio",
         "Metalar y tornear bielas/bancadas",
+        "Probar alojamiento de bancadas",
         "Probar metales de bancada",
         "Radioscopía (detección de fisuras)",
+        "Precapados y metalizados",
         "Cambiar anillo de cámara",
         "Encasquillar asiento de válvula",
-        "Repasar túnel de bancadito",
+        "Reparar túnel de bancadito",
         "Relleno y rectificado de cuello trasero de block"
     ],
 
     // Bloque de Confianza
     trust1Text: "+20 Años de Experiencia",
-    trust2Text: "Calidad Garantizada ISO",
-    trust3Text: "Garantía de 6 Meses",
+    trust2Text: "Especialidad en Reparaciones",
+    trust3Text: "Servicio Garantizado",
 
     // Proceso de Trabajo
-    process1Title: "Diagnóstico",
-    process1Desc: "Evaluación inicial y desarme meticuloso del motor o pieza.",
+    process1Title: "Diagnostico",
+    process1Desc: "Evaluacion inicial y desarme meticuloso del motor o pieza.",
     process2Title: "Presupuesto",
     process2Desc: "Detalle transparente de repuestos y mano de obra necesaria.",
-    process3Title: "Reparación",
-    process3Desc: "Mecanizado y rectificado con maquinaria de alta precisión.",
+    process3Title: "Reparacion",
+    process3Desc: "Mecanizado y rectificado con maquinaria de alta precision.",
     process4Title: "Entrega",
     process4Desc: "Armado, control de calidad y entrega en tiempo y forma.",
 
     // Nosotros
-    aboutText: "Somos un taller con más de 20 años de experiencia en la rectificación de motores. Nuestro compromiso es brindar soluciones duraderas y de alta precisión para todo tipo de vehículos y maquinarias. Contamos con un equipo de profesionales altamente capacitados y maquinaria de última generación.",
+    aboutText: "Somos un taller con mas de 20 años de experiencia en la rectificacion de motores. Nuestro compromiso es brindar soluciones duraderas para todo tipo de motores. Contamos con taller de mecanizado completo, banco de pruebas de motor a inyeccion electronica, escaner y herramientas especiales para todas las marcas. Hacemos envios al interior, armado de motores, retiros de motores, presupuestos a coordinar, entrega de motores empacados o en cajon de madera.",
 
     // Imágenes
     heroImg: "",
@@ -92,7 +80,7 @@ const defaultData = {
 
     // CTA
     ctaTitle: "¿Listo para darle nueva vida a su motor?",
-    ctaText: "Contáctenos hoy mismo para recibir asesoramiento técnico y un presupuesto a su medida.",
+    ctaText: "Contactenos hoy mismo para recibir asesoramiento tecnico y un presupuesto a su medida.",
 
     // WhatsApp Config
     wpNumber: "595981123456",
@@ -124,41 +112,26 @@ function getSiteData() {
     return defaultData;
 }
 
-// Función principal para inicializar los datos desde Firebase
-async function initAppData() {
-    try {
-        // Intentar obtener de Firestore
-        const doc = await configDoc.get();
-        if (doc.exists) {
-            console.log("✅ Datos cargados desde Firebase");
-            activeData = { ...defaultData, ...doc.data() };
-            // Actualizar localstorage para redundancia
-            localStorage.setItem('siteData_sanrafael', JSON.stringify(activeData));
-        } else {
-            console.log("ℹ️ No hay datos en Firebase, usando locales.");
-            activeData = getSiteData();
-        }
-    } catch (e) {
-        console.warn("⚠️ Error conectando a Firebase (usando datos locales):", e);
-        activeData = getSiteData();
-    } finally {
-        // Una vez cargados los datos, renderizar o inicializar panel
-        if (document.getElementById('hero-title')) {
-            renderContent();
-        }
-        if (document.getElementById('admin-app')) {
-            initAdminPanel();
-        }
+// Función principal para inicializar los datos
+function initAppData() {
+    activeData = getSiteData();
 
-        // --- OCULTAR PRELOADER (FORZADO) ---
-        const preloader = document.getElementById('preloader');
-        if (preloader) {
-            preloader.style.opacity = '0';
-            setTimeout(() => {
-                preloader.style.display = 'none';
-                document.body.classList.remove('overflow-hidden');
-            }, 800);
-        }
+    // Renderizar o inicializar panel
+    if (document.getElementById('hero-title')) {
+        renderContent();
+    }
+    if (document.getElementById('admin-app')) {
+        initAdminPanel();
+    }
+
+    // --- OCULTAR PRELOADER (FORZADO) ---
+    const preloader = document.getElementById('preloader');
+    if (preloader) {
+        preloader.style.opacity = '0';
+        setTimeout(() => {
+            preloader.style.display = 'none';
+            document.body.classList.remove('overflow-hidden');
+        }, 800);
     }
 }
 
@@ -442,147 +415,12 @@ document.addEventListener('DOMContentLoaded', () => {
 // FUNCIONES DEL PANEL DE ADMINISTRACIÓN
 // ==========================================
 function initAdminPanel() {
-    const loginView = document.getElementById('login-view');
-    const adminView = document.getElementById('admin-view');
-    const loadingView = document.getElementById('loading-view');
-    const loginForm = document.getElementById('login-form');
-
-    // Escuchar el estado de la autenticación de Firebase
-    firebase.auth().onAuthStateChanged((user) => {
-        // Ocultar preloader con un pequeño retraso para mayor fluidez visual
-        setTimeout(() => {
-            togglePreloader(false);
-        }, 1000);
-
-        // Activar la transición suave del fondo y aparición del panel (vía CSS)
-        document.body.classList.add('loaded');
-
-        if (user) {
-            // Usuario logueado satisfactoriamente
-            if (loginView) loginView.style.display = 'none';
-            if (adminView) adminView.style.display = 'block';
-            populateAdminForm();
-        } else {
-            // No hay sesión activa
-            if (loginView) loginView.style.display = 'block';
-            if (adminView) adminView.style.display = 'none';
-
-            // VERIFICAR BLOQUEO AL CARGAR
-            checkLockoutState();
-        }
-    });
-
-    // Lógica de Login con Firebase Auth
-    if (loginForm) {
-        const loginError = document.getElementById('login-error');
-
-        // Ocultar error cuando el usuario vuelva a escribir
-        loginForm.querySelectorAll('input').forEach(input => {
-            input.addEventListener('input', () => {
-                if (loginError) loginError.classList.add('hidden');
-            });
-        });
-
-        loginForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('username').value;
-            const pass = document.getElementById('password').value;
-
-            // 1. Comprobar Bloqueo de Seguridad (Rate Limiting)
-            const lockoutUntil = parseInt(localStorage.getItem('admin_lockout')) || 0;
-            const now = Date.now();
-
-            if (now < lockoutUntil) {
-                const minutesLeft = Math.ceil((lockoutUntil - now) / 60000);
-                if (loginError) {
-                    loginError.textContent = `Acceso suspendido. Intente en ${minutesLeft} minutos.`;
-                    loginError.classList.remove('hidden');
-                }
-                return;
-            }
-
-            // Limpiar errores previos
-            if (loginError) loginError.classList.add('hidden');
-
-            try {
-                // Mostrar estado de carga
-                toggleButtonLoading('login-btn', true);
-
-                // Intentar iniciar sesión en Firebase
-                await firebase.auth().signInWithEmailAndPassword(email, pass);
-
-                // Limpiar contador de intentos si entra con éxito
-                localStorage.removeItem('admin_login_tries');
-                localStorage.removeItem('admin_lockout');
-
-                showToast('Sesión iniciada correctamente');
-            } catch (error) {
-                console.error("Error de login:", error);
-
-                // Incrementar intentos fallidos
-                let tries = parseInt(localStorage.getItem('admin_login_tries')) || 0;
-                tries++;
-                localStorage.setItem('admin_login_tries', tries);
-
-                if (loginError) {
-                    if (tries >= 20) {
-                        localStorage.setItem('admin_lockout_active', 'true');
-                        checkLockoutState();
-                    } else {
-                        loginError.textContent = 'Correo o contraseña incorrectos. Inténtelo nuevamente.';
-                        loginError.classList.remove('hidden');
-                    }
-                }
-            } finally {
-                toggleButtonLoading('login-btn', false);
-            }
-        });
-    }
-
-    // Lógica de Desbloqueo por PIN
-    const pinInput = document.getElementById('unlock-pin');
-    if (pinInput) {
-        pinInput.addEventListener('input', (e) => {
-            if (e.target.value === '0000') {
-                localStorage.removeItem('admin_login_tries');
-                localStorage.removeItem('admin_lockout_active');
-                showToast('Sistema desbloqueado. Puede intentar de nuevo.');
-                e.target.value = '';
-                checkLockoutState();
-            }
-        });
-    }
-    // Lógica de Logout
-    const logoutBtn = document.getElementById('logout-btn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', () => {
-            togglePreloader(true, 'Cerrando sesión...');
-            firebase.auth().signOut().then(() => {
-                showToast('Sesión cerrada');
-            });
-        });
-    }
-}
-
-// Función para verificar el estado de bloqueo
-function checkLockoutState() {
-    const loginFields = document.getElementById('login-fields');
-    const lockoutView = document.getElementById('lockout-view');
-    const isLocked = localStorage.getItem('admin_lockout_active') === 'true';
-
-    if (isLocked) {
-        if (loginFields) loginFields.classList.add('hidden');
-        if (lockoutView) lockoutView.classList.remove('hidden');
-
-        // Limpiar campos por seguridad
-        const u = document.getElementById('username');
-        const p = document.getElementById('password');
-        if (u) u.value = '';
-        if (p) p.value = '';
-    } else {
-        if (loginFields) loginFields.classList.remove('hidden');
-        if (lockoutView) lockoutView.classList.add('hidden');
-    }
+    // Ocultar preloader
+    setTimeout(() => {
+        togglePreloader(false);
+    }, 1000);
+    document.body.classList.add('loaded');
+    populateAdminForm();
 }
 
 // Acordeón del panel de administración
@@ -700,8 +538,8 @@ window.deleteSecService = function (index) {
 };
 
 
-// Guardar los datos del formulario en localStorage y Firebase
-async function saveAdminData() {
+// Guardar los datos del formulario en localStorage
+function saveAdminData() {
     const newData = {};
     const baseKeys = Object.keys(defaultData);
 
@@ -724,23 +562,16 @@ async function saveAdminData() {
         }
     });
 
-    // 1. Guardar en LocalStorage (Respuesta inmediata)
-    localStorage.setItem('siteData', JSON.stringify(newData));
+    // Guardar en LocalStorage (Respuesta inmediata)
+    localStorage.setItem('siteData_sanrafael', JSON.stringify(newData));
     activeData = newData;
 
-    // 2. Intentar guardar en Firebase (Nube)
-    try {
-        toggleButtonLoading('save-btn', true);
-        await configDoc.set(newData);
-        showToast('Cambios sincronizados en la nube');
-    } catch (e) {
-        console.error("Error en Firebase:", e);
-        showToast('Guardado local. Error al sincronizar en la nube.');
-    } finally {
+    toggleButtonLoading('save-btn', true);
+    setTimeout(() => {
         toggleButtonLoading('save-btn', false);
-    }
-
-    renderContent(); // Refrescar cambios visuales inmediatamente
+        showToast('Cambios guardados localmente para previsualización.');
+        renderContent(); // Refrescar cambios visuales inmediatamente
+    }, 500);
 }
 
 // Función auxiliar para botones con carga
