@@ -69,7 +69,7 @@ const defaultData = {
 
     // Imágenes
     heroImg: "",
-    trustImg: "confianza.jpeg",
+    trustImg: "humber.jpeg",
     aboutImg: "nosotros.jpeg",
     serviceBg1: "",
     serviceBg2: "",
