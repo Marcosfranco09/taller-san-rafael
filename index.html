@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Taller San Rafael </title>
-    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="icon" type="image/png" href="assets/img/logo.png">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -40,30 +40,18 @@
     </script>
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
 
     <!-- Script Crítico: Aplica branding antes del renderizado para evitar parpadeos -->
     <script>
             (function () {
-                const stored = localStorage.getItem('siteData_sanrafael');
-                if (stored) {
-                    try {
-                        const data = JSON.parse(stored);
-                        const root = document.documentElement;
-                        if (data.accentColor) {
-                            root.style.setProperty('--color-accent', data.accentColor);
-                            root.style.setProperty('--accent-gradient', data.accentColor);
-                        }
-                        // Aplicar Hero Bg: Usamos el guardado o el local por defecto
-                        const heroImage = data.heroImg || 'fondo_principal.png';
-                        if (heroImage) {
-                            const style = document.createElement('style');
-                            const bgUrl = encodeURI(heroImage).replace(/'/g, "\\'");
-                            style.textContent = `#hero-bg { background-image: url('${bgUrl}'); opacity: 1 !important; }`;
-                            document.head.appendChild(style);
-                        }
-                    } catch (e) { }
-                }
+                const root = document.documentElement;
+                root.style.setProperty('--color-accent', '#e53e3e');
+                root.style.setProperty('--accent-gradient', '#e53e3e');
+
+                const style = document.createElement('style');
+                style.textContent = `#hero-bg { background-image: url('assets/img/fondo_principal.png'); opacity: 1 !important; }`;
+                document.head.appendChild(style);
             })();
     </script>
     <script>
@@ -89,7 +77,7 @@
             <!-- Anillo giratorio de acento -->
             <div class="absolute inset-0 border-4 border-accent rounded-full border-t-transparent animate-spin"></div>
             <!-- Logo en el centro -->
-            <img src="logo.png" alt="Taller San Rafael" class="h-16 w-16 object-contain opacity-80 animate-pulse">
+            <img src="assets/img/logo.png" alt="Taller San Rafael" class="h-16 w-16 object-contain opacity-80 animate-pulse">
         </div>
         <!-- Texto informativo -->
         <div id="preloader-text"
@@ -139,14 +127,14 @@
         <div class="absolute inset-0 bg-black/75 z-0"></div>
 
         <div class="relative z-10 container mx-auto px-6 py-12 flex flex-col items-center text-center">
-            <img src="logo.png" alt="San Rafael Taller Logo" class="h-24 md:h-32 mb-8 drop-shadow-lg object-contain"
+            <img src="assets/img/logo.png" alt="San Rafael Taller Logo" class="h-24 md:h-32 mb-8 drop-shadow-lg object-contain"
                 onerror="this.style.display='none'" style="scale: 1.7;">
 
             <h1 id="hero-title"
                 class="font-display text-4xl md:text-6xl text-white mb-4 tracking-tight titulo_principal">TALLER SAN
                 RAFAEL</h1>
-            <p id="hero-subtitle" class="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto">Subtítulo o propuesta
-                de valor breve</p>
+            <p id="hero-subtitle" class="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto">Especialistas en
+                motores y maquinaria agrícola</p>
 
             <button onclick="abrirWhatsApp()" class="btn-primary flex items-center gap-2 text-lg px-8 py-4">
                 <i class="fa-brands fa-whatsapp text-2xl"></i>
@@ -159,8 +147,8 @@
     <section class="py-12 md:py-20 bg-dark container mx-auto px-6 reveal" id="servicios">
         <div class="text-center mb-16 reveal">
             <h2 id="services-title" class="font-display text-3xl md:text-4xl text-white mb-4">Nuestros Servicios</h2>
-            <p id="services-subtitle" class="text-gray-400 max-w-2xl mx-auto">Descripción breve de los servicios que
-                ofrecemos</p>
+            <p id="services-subtitle" class="text-gray-400 max-w-2xl mx-auto">Soluciones integrales en rectificación y
+                precisión de sus motores.</p>
         </div>
         <div class="relative group px-4">
             <!-- Flechas de navegación (Mobile) -->
@@ -173,10 +161,11 @@
                 <div class="service-card p-8 text-center reveal reveal-delay-1">
                     <div id="srv1-bg" class="service-card-bg"></div>
                     <i class="fa-solid fa-gears service-icon"></i>
-                    <h3 id="srv1-title" class="font-display text-xl text-white mb-3">Rectificación de Motores</h3>
-                    <p id="srv1-desc" class="text-gray-400">Texto descriptivo breve que será reemplazado posteriormente.
+                    <h3 id="srv1-title" class="font-display text-xl text-white mb-3">Rectificación de Motor</h3>
+                    <p id="srv1-desc" class="text-gray-400">Servicio completo de rectificación para devolver la potencia
+                        original a su motor.
                     </p>
-                    <button class="btn-cotizar" onclick="cotizarServicio('Rectificación de Motores')">Cotizar
+                    <button class="btn-cotizar" onclick="cotizarServicio('Rectificación de Motor')">Cotizar
                         servicio</button>
                 </div>
                 <!-- Card 2 -->
@@ -184,7 +173,8 @@
                     <div id="srv2-bg" class="service-card-bg"></div>
                     <i class="fa-solid fa-screwdriver-wrench service-icon"></i>
                     <h3 id="srv2-title" class="font-display text-xl text-white mb-3">Cigüeñal</h3>
-                    <p id="srv2-desc" class="text-gray-400">Texto descriptivo breve que será reemplazado posteriormente.
+                    <p id="srv2-desc" class="text-gray-400">Rectificado y pulido de apoyos para garantizar el ajuste
+                        perfecto.
                     </p>
                     <button class="btn-cotizar" onclick="cotizarServicio('Cigüeñal')">Cotizar servicio</button>
                 </div>
@@ -192,17 +182,17 @@
                 <div class="service-card p-8 text-center reveal reveal-delay-3">
                     <div id="srv3-bg" class="service-card-bg"></div>
                     <i class="fa-solid fa-layer-group service-icon"></i>
-                    <h3 id="srv3-title" class="font-display text-xl text-white mb-3">Tapas de Cilindro</h3>
-                    <p id="srv3-desc" class="text-gray-400">Texto descriptivo breve que será reemplazado posteriormente.
+                    <h3 id="srv3-title" class="font-display text-xl text-white mb-3">Block de motor</h3>
+                    <p id="srv3-desc" class="text-gray-400">Soldadura, encamisado, bruñido y mecanizado de block.
                     </p>
-                    <button class="btn-cotizar" onclick="cotizarServicio('Tapas de Cilindro')">Cotizar servicio</button>
+                    <button class="btn-cotizar" onclick="cotizarServicio('Block de motor')">Cotizar servicio</button>
                 </div>
                 <!-- Card 4 -->
                 <div class="service-card p-8 text-center">
                     <div id="srv4-bg" class="service-card-bg"></div>
                     <i class="fa-solid fa-ruler-combined service-icon"></i>
                     <h3 id="srv4-title" class="font-display text-xl text-white mb-3">Cilindros y Camisas</h3>
-                    <p id="srv4-desc" class="text-gray-400">Texto descriptivo breve que será reemplazado posteriormente.
+                    <p id="srv4-desc" class="text-gray-400">Bruñido y encamisado de cilindros con tolerancias exactas.
                     </p>
                     <button class="btn-cotizar" onclick="cotizarServicio('Cilindros y Camisas')">Cotizar
                         servicio</button>
@@ -211,17 +201,19 @@
                 <div class="service-card p-8 text-center">
                     <div id="srv5-bg" class="service-card-bg"></div>
                     <i class="fa-solid fa-screwdriver-wrench service-icon"></i>
-                    <h3 id="srv5-title" class="font-display text-xl text-white mb-3">Bielas y Bancadas</h3>
-                    <p id="srv5-desc" class="text-gray-400">Texto descriptivo breve que será reemplazado posteriormente.
+                    <h3 id="srv5-title" class="font-display text-xl text-white mb-3">Tapa de motor</h3>
+                    <p id="srv5-desc" class="text-gray-400">Soldadura, rectificado de asientos, prueba hidráulica,
+                        recambio de guías y metales.
                     </p>
-                    <button class="btn-cotizar" onclick="cotizarServicio('Bielas y Bancadas')">Cotizar servicio</button>
+                    <button class="btn-cotizar" onclick="cotizarServicio('Tapa de motor')">Cotizar servicio</button>
                 </div>
                 <!-- Card 6 -->
                 <div class="service-card p-8 text-center">
                     <div id="srv6-bg" class="service-card-bg"></div>
                     <i class="fa-solid fa-plus service-icon"></i>
                     <h3 id="srv6-title" class="font-display text-xl text-white mb-3">Servicios Complementarios</h3>
-                    <p id="srv6-desc" class="text-gray-400">Texto descriptivo breve que será reemplazado posteriormente.
+                    <p id="srv6-desc" class="text-gray-400">Lavado a presión, armado de motores, venta de repuestos y
+                        metales, diagnóstico con scanner, alineación de bielas y otros.
                     </p>
                     <button class="btn-cotizar" onclick="cotizarServicio('Servicios Complementarios')">Cotizar
                         servicio</button>
@@ -255,25 +247,25 @@
                 <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                     <div class="flex flex-col items-center">
                         <i class="fa-solid fa-calendar-check text-accent text-4xl mb-4"></i>
-                        <span id="trust1-text" class="font-display font-semibold text-xl text-white">Años de
-                            experiencia</span>
+                        <span id="trust1-text" class="font-display font-semibold text-xl text-white">+20 Años de
+                            Experiencia</span>
                     </div>
                     <div class="flex flex-col items-center">
                         <i class="fa-solid fa-medal text-accent text-4xl mb-4"></i>
-                        <span id="trust2-text" class="font-display font-semibold text-xl text-white">Calidad del
-                            servicio</span>
+                        <span id="trust2-text" class="font-display font-semibold text-xl text-white">Especialidad en
+                            Diésel livianos</span>
                     </div>
                     <div class="flex flex-col items-center">
                         <i class="fa-solid fa-shield-halved text-accent text-4xl mb-4"></i>
-                        <span id="trust3-text" class="font-display font-semibold text-xl text-white">Garantía</span>
+                        <span id="trust3-text" class="font-display font-semibold text-xl text-white">Garantía de
+                            Reparación</span>
                     </div>
                 </div>
                 <!-- Imagen Taller -->
                 <div class="w-full">
                     <div id="trust-img"
                         class="bg-card w-full h-80 md:h-[450px] rounded-lg flex items-center justify-center border border-gray-700 overflow-hidden shadow-2xl">
-                        <span class="text-gray-500 font-display text-xl"><i class="fa-solid fa-image mr-2"></i> Imagen
-                            del taller</span>
+                        <img src="assets/img/humber.jpeg" alt="Taller San Rafael" class="w-full h-full object-cover rounded-lg">
                     </div>
                 </div>
             </div>
@@ -296,7 +288,8 @@
                     class="w-16 h-16 mx-auto bg-card border-2 border-accent rounded-full flex items-center justify-center text-accent text-xl font-bold mb-4">
                     1</div>
                 <h4 id="proc1-title" class="font-display text-xl text-white mb-2">Diagnóstico</h4>
-                <p id="proc1-desc" class="text-gray-400 text-sm">Descripción breve del paso.</p>
+                <p id="proc1-desc" class="text-gray-400 text-sm">Evaluación inicial y desarme meticuloso del motor o
+                    pieza.</p>
             </div>
             <!-- Paso 2 -->
             <div class="text-center relative z-10 reveal reveal-delay-2">
@@ -304,7 +297,8 @@
                     class="w-16 h-16 mx-auto bg-card border-2 border-accent rounded-full flex items-center justify-center text-accent text-xl font-bold mb-4">
                     2</div>
                 <h4 id="proc2-title" class="font-display text-xl text-white mb-2">Presupuesto</h4>
-                <p id="proc2-desc" class="text-gray-400 text-sm">Descripción breve del paso.</p>
+                <p id="proc2-desc" class="text-gray-400 text-sm">Detalle transparente de repuestos y mano de obra
+                    necesaria.</p>
             </div>
             <!-- Paso 3 -->
             <div class="text-center relative z-10 reveal reveal-delay-3">
@@ -312,7 +306,8 @@
                     class="w-16 h-16 mx-auto bg-card border-2 border-accent rounded-full flex items-center justify-center text-accent text-xl font-bold mb-4">
                     3</div>
                 <h4 id="proc3-title" class="font-display text-xl text-white mb-2">Reparación</h4>
-                <p id="proc3-desc" class="text-gray-400 text-sm">Descripción breve del paso.</p>
+                <p id="proc3-desc" class="text-gray-400 text-sm">Mecanizado y rectificado con maquinaria de alta
+                    precisión.</p>
             </div>
             <!-- Paso 4 -->
             <div class="text-center relative z-10 reveal reveal-delay-4">
@@ -320,7 +315,8 @@
                     class="w-16 h-16 mx-auto bg-card border-2 border-accent rounded-full flex items-center justify-center text-accent text-xl font-bold mb-4">
                     4</div>
                 <h4 id="proc4-title" class="font-display text-xl text-white mb-2">Entrega</h4>
-                <p id="proc4-desc" class="text-gray-400 text-sm">Descripción breve del paso.</p>
+                <p id="proc4-desc" class="text-gray-400 text-sm">Armado, control de calidad y entrega en tiempo y forma.
+                </p>
             </div>
         </div>
     </section>
@@ -332,15 +328,16 @@
                 <div class="w-full lg:w-1/2">
                     <h2 class="font-display text-3xl md:text-4xl text-white mb-6" style="text-align: center;">Sobre
                         Nosotros</h2>
-                    <p id="about-text" class="text-gray-400 mb-6" style="text-align: center;">Texto breve sobre la
-                        empresa, historia o valores. Será
-                        reemplazado posteriormente.</p>
+                    <p id="about-text" class="text-gray-400 mb-6" style="text-align: center;">Somos un taller con más de
+                        20 años de experiencia en la rectificación de motores. Nos especializamos en motores diésel y
+                        nafteros, y nuestra experiencia nos permite trabajar con una amplia gama de
+                        vehículos.<br><br>Nuestro compromiso es brindar el más alto nivel de servicio y atención a todos
+                        nuestros clientes, ofreciendo soluciones duraderas para sus vehículos.</p>
                 </div>
                 <div class="w-full lg:w-1/2">
                     <div id="about-img"
                         class="bg-card w-full h-64 rounded-lg flex items-center justify-center border border-gray-700 overflow-hidden">
-                        <span class="text-gray-500 font-display text-xl"><i class="fa-solid fa-image mr-2"></i> Imagen
-                            Nosotros</span>
+                        <img src="assets/img/nosotros.jpeg" alt="Nosotros" class="w-full h-full object-cover rounded-lg">
                     </div>
                 </div>
             </div>
@@ -350,10 +347,11 @@
     <!-- 6. CTA -->
     <section class="py-16 md:py-24 bg-accent text-center px-6">
         <div class="container mx-auto max-w-3xl">
-            <h2 id="cta-title" class="font-display text-3xl md:text-5xl text-white mb-6 font-bold">¿Listo para comenzar?
+            <h2 id="cta-title" class="font-display text-3xl md:text-5xl text-white mb-6 font-bold">¿Listo para darle
+                nueva vida a su motor?
             </h2>
-            <p id="cta-text" class="text-white text-lg mb-10 opacity-90">Texto de invitación a contactar. Será
-                reemplazado.</p>
+            <p id="cta-text" class="text-white text-lg mb-10 opacity-90">Contáctenos hoy mismo para recibir
+                asesoramiento técnico y un presupuesto a su medida.</p>
             <button onclick="abrirWhatsApp()"
                 class="bg-white text-accent hover:bg-gray-100 font-bold py-4 px-8 rounded-lg shadow-lg transition-transform transform hover:-translate-y-1 text-lg flex items-center justify-center mx-auto gap-2">
                 <i class="fa-brands fa-whatsapp text-2xl"></i>
@@ -367,18 +365,15 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             <!-- Mapa + Botón -->
             <div class="flex flex-col gap-3">
-                <div class="flex-1 min-h-[300px] md:min-h-[400px] rounded-lg overflow-hidden border border-gray-800 shadow-xl relative">
-                    <iframe
-                        class="absolute w-full"
-                        style="border:0; pointer-events: none; top: -65px; height: calc(100% + 65px);"
-                        loading="lazy"
-                        allowfullscreen
-                        referrerpolicy="no-referrer-when-downgrade"
+                <div
+                    class="flex-1 min-h-[300px] md:min-h-[400px] rounded-lg overflow-hidden border border-gray-800 shadow-xl relative">
+                    <iframe class="absolute w-full"
+                        style="border:0; pointer-events: none; top: -65px; height: calc(100% + 65px);" loading="lazy"
+                        allowfullscreen referrerpolicy="no-referrer-when-downgrade"
                         src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3604.6467!2d-57.4901977!3d-25.3659664!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjXCsDIxJzU3LjUiUyA1N8KwMjknMjQuNyJX!5e0!3m2!1ses!2spy!4v1714856000000!5m2!1ses!2spy">
                     </iframe>
                 </div>
-                <a href="https://www.google.com/maps/dir/?api=1&destination=-25.3659664,-57.4901977"
-                    target="_blank"
+                <a href="https://www.google.com/maps/dir/?api=1&destination=-25.3659664,-57.4901977" target="_blank"
                     rel="noopener noreferrer"
                     class="btn-como-llegar w-full py-3 bg-transparent border border-accent text-accent uppercase tracking-widest text-xs font-bold flex items-center justify-center gap-2 rounded-lg shadow-lg">
                     <i class="fa-solid fa-map-location-dot text-base"></i>
@@ -501,8 +496,8 @@
     </a>
 
     <!-- Scripts -->
-    <script src="script.js"></script>
-    <script src="effects.js"></script>
+    <script src="assets/js/script.js"></script>
+    <script src="assets/js/effects.js"></script>
 </body>
 
 </html>

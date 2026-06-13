@@ -640,68 +640,7 @@ nav {
   border-color: var(--color-text-muted);
 }
 
-/* Panel de Administración */
-.admin-panel {
-  background-color: var(--color-dark-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 0.75rem;
-  overflow: hidden;
-}
 
-.admin-section {
-  border-bottom: 1px solid var(--color-border);
-  transition: background-color 0.3s ease;
-}
-
-.admin-section:last-child {
-  border-bottom: none;
-}
-
-.admin-section-header {
-  background-color: var(--color-dark-card);
-  padding: 1.25rem 1rem;
-  cursor: pointer;
-  border-bottom: 1px solid transparent;
-  font-weight: 600;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  transition: background-color 0.2s ease;
-}
-
-.admin-section.active .admin-section-header {
-  border-bottom: 1px solid var(--color-border);
-}
-
-.admin-section-header:hover {
-  background-color: rgba(255, 255, 255, 0.05);
-}
-
-.admin-section-content {
-  padding: 0 1.5rem;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease-out, padding 0.3s ease-out;
-}
-
-/* Pantalla de Carga (Overlay Fullscreen) */
-#loading-view {
-  position: fixed;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.6); /* Más transparente para ver el fondo */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  text-align: center;
-  transition: opacity 0.8s ease, visibility 0.8s ease;
-}
-
-#loading-view.fade-out {
-  opacity: 0;
-  visibility: hidden;
-}
 
 /* Toast Notificaciones */
 #toast {
@@ -784,54 +723,7 @@ nav {
     font-size: 14px;
   }
 
-  .admin-panel {
-    border-radius: 0;
-    border-left: none;
-    border-right: none;
-  }
-}
 
-/* Admin Panel Specifics */
-.admin-body {
-  position: relative;
-  background-color: #000;
-}
-
-.admin-body::before {
-  content: "";
-  position: fixed;
-  inset: -20px;
-  background-image: url('fondo_panel.png');
-  background-size: cover;
-  background-position: center;
-  filter: blur(8px) brightness(0.6); /* Siempre desenfocado */
-  z-index: 0;
-}
-
-#admin-app {
-  position: relative;
-  z-index: 10;
-  opacity: 0;
-  transition: opacity 1s ease 0.4s; /* Aparece suavemente después de que inicia el blur */
-  /* Forzamos los colores originales para el panel administrativo */
-  --color-accent: #e53e3e !important;
-  --color-accent-hover: #c53030 !important;
-  --accent-gradient: #e53e3e !important;
-}
-
-body.loaded #admin-app {
-  opacity: 1;
-}
-
-/* Rotación de flechas en Admin */
-.admin-section-header .fa-chevron-down {
-  transition: transform 0.3s ease;
-}
-
-.admin-section-header.active .fa-chevron-down {
-  transform: rotate(180deg);
-  color: var(--color-accent);
-}
 
 /* Toast de Notificación — Estilo Corporativo */
 #toast {
